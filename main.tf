@@ -5,6 +5,7 @@ data "aws_sns_topic" "topic" {
 
 locals {
   cloudwatch_namespace = "AWS/RDS"
+  treat_missing_data   = "notBreaching"
 }
 
 #------------------------------------------------------------------------------
@@ -44,8 +45,8 @@ resource "aws_cloudwatch_metric_alarm" "volume_read_iops" {
   alarm_actions             = [data.aws_sns_topic.topic.arn]
   ok_actions                = [data.aws_sns_topic.topic.arn]
   insufficient_data_actions = [data.aws_sns_topic.topic.arn]
-  treat_missing_data        = "breaching"
   tags                      = var.tags
+  treat_missing_data        = local.treat_missing_data
   dimensions = {
     DBInstanceIdentifier = var.db_instance_id
   }
@@ -65,8 +66,8 @@ resource "aws_cloudwatch_metric_alarm" "volume_write_iops" {
   alarm_actions             = [data.aws_sns_topic.topic.arn]
   ok_actions                = [data.aws_sns_topic.topic.arn]
   insufficient_data_actions = [data.aws_sns_topic.topic.arn]
-  treat_missing_data        = "breaching"
   tags                      = var.tags
+  treat_missing_data        = local.treat_missing_data
   dimensions = {
     DBInstanceIdentifier = var.db_instance_id
   }
@@ -86,8 +87,8 @@ resource "aws_cloudwatch_metric_alarm" "volume_bytes_used" {
   alarm_actions             = [data.aws_sns_topic.topic.arn]
   ok_actions                = [data.aws_sns_topic.topic.arn]
   insufficient_data_actions = [data.aws_sns_topic.topic.arn]
-  treat_missing_data        = "breaching"
   tags                      = var.tags
+  treat_missing_data        = local.treat_missing_data
   dimensions = {
     DBInstanceIdentifier = var.db_instance_id
   }
@@ -107,8 +108,8 @@ resource "aws_cloudwatch_metric_alarm" "backup_retention_period_storage_used" {
   alarm_actions             = [data.aws_sns_topic.topic.arn]
   ok_actions                = [data.aws_sns_topic.topic.arn]
   insufficient_data_actions = [data.aws_sns_topic.topic.arn]
-  treat_missing_data        = "breaching"
   tags                      = var.tags
+  treat_missing_data        = local.treat_missing_data
   dimensions = {
     DBInstanceIdentifier = var.db_instance_id
   }
@@ -129,7 +130,7 @@ resource "aws_cloudwatch_metric_alarm" "total_backup_storage_billed" {
   ok_actions                = [data.aws_sns_topic.topic.arn]
   insufficient_data_actions = [data.aws_sns_topic.topic.arn]
   tags                      = var.tags
-  treat_missing_data        = "breaching"
+  treat_missing_data        = local.treat_missing_data
   dimensions = {
     DBInstanceIdentifier = var.db_instance_id
   }
@@ -148,7 +149,8 @@ resource "aws_cloudwatch_metric_alarm" "serverless_database_capacity" {
   alarm_description   = "Serverless database capacity has exceeded threshold."
   alarm_actions       = [data.aws_sns_topic.topic.arn]
   ok_actions          = [data.aws_sns_topic.topic.arn]
-  tags                = var.tags
+  tags = var.tags
+  treat_missing_data  = local.treat_missing_data
   dimensions = {
     DBInstanceIdentifier = var.db_instance_id
   }
