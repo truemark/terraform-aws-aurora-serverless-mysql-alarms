@@ -1,6 +1,6 @@
-# terraform-aws-aurora-serverless-postgres-alarms
+# terraform-aws-aurora-serverless-mysql-alarms
 
-This repo defines alarms specific to Postgresql on RDS Aurora Serverless v1.
+This repo defines alarms specific to MySQL on RDS Aurora Serverless v1.
 
 Each alarm listed below is created by default. Creation can be disabled by setting the associated alarm create parameter to false. For example, to not create the alarm serverless_database_capacity, set the parameter create_serverless_database_capacity_alarm to false.
 
