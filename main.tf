@@ -149,7 +149,7 @@ resource "aws_cloudwatch_metric_alarm" "serverless_database_capacity" {
   alarm_description   = "Serverless database capacity has exceeded threshold."
   alarm_actions       = [data.aws_sns_topic.topic.arn]
   ok_actions          = [data.aws_sns_topic.topic.arn]
-  tags = var.tags
+  tags                = var.tags
   treat_missing_data  = local.treat_missing_data
   dimensions = {
     DBInstanceIdentifier = var.db_instance_id
